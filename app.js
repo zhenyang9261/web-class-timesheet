@@ -12,7 +12,6 @@
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
 
 
 // Create a variable to reference the database.
@@ -60,12 +59,12 @@ database.ref().on("child_added", function(snapshot) {
   var roleTd = $("<td>").text(sv.role);
   var startDayTd = $("<td>").text(sv.startDay);
   var monthlyRateTd = $("<td>").text(sv.monthlyRate);
-  var test = $("<td>").text("");
-  var test2 = $("<td>").text("");
+  var test = $("<td>").text("Test");
+  var test2 = $("<td>").text("test 2");
 
   var tr = $("<tr>");
 
-  tr.append(nameTd, roleTd, startDay, test, monthlyRateTd, test2);
+  tr.append(nameTd, roleTd, startDayTd, test, monthlyRateTd, test2);
 
   $("#employee-table").append(tr);
 
