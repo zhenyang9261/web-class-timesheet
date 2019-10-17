@@ -1,4 +1,5 @@
 
+
   // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyAq-FSedSgC4FWDb89cL7NXMMET8g2765g",
@@ -38,8 +39,8 @@ $("#add-employee-btn").on("click", function(event) {
     name: name,
     role: role,
     startDay: startDay,
-    monthlyRate: monthlyRate
-    // dateAdded: firebase.database.ServerValue.TIMESTAMP
+    monthlyRate: monthlyRate,
+    dateAdded: firebase.database.ServerValue.TIMESTAMP
   });
 
 });
@@ -58,23 +59,20 @@ database.ref().on("child_added", function(snapshot) {
   var nameTd = $("<td>").text(sv.name);
   var roleTd = $("<td>").text(sv.role);
   var startDayTd = $("<td>").text(sv.startDay);
-  var monthlyRateTd = $("<td>").text(sv.monthlyRate);
-  var test = $("<td>").text("Test");
-  var test2 = $("<td>").text("test 2");
+  var monthlyRateTd = $("<td>").text(numeral(sv.monthlyRate).format('$0,0'));
+
+  var totalMonthWork = parseInt(moment(sv.startDay).diff(moment(),"months")) * -1;
+
+  var monthsWork = $("<td>").text(totalMonthWork);
+
+  var totalBilled = totalMonthWork * parseInt(sv.monthlyRate);
+
+  var totalCompensation = $("<td>").text(numeral(totalBilled).format('$0,0'));
 
   var tr = $("<tr>");
 
-  tr.append(nameTd, roleTd, startDayTd, test, monthlyRateTd, test2);
-
   $("#employee-table").append(tr);
 
-  // Change the HTML to reflect
-//   $("#name-display").text(sv.name);
-//   $("#role-display").text(sv.role);
-//   $("#startDay-display").text(sv.startDay);
-  //$("#monthlyRate-display").text(sv.monthlyRate);
+  tr.append(nameTd, roleTd, startDayTd, monthsWork, monthlyRateTd, totalCompensation);
 
-  // Handle the errors
-}, function(errorObject) {
-  console.log("Errors handled: " + errorObject.code);
 });
